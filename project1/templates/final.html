@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Weather Forecast</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+<script>
+
+$(document).ready(function(){
+	
+	
+	$("#but").click(function(e){
+		date=(document.getElementById("date_id").value.replace(/[^0-9]/, '')).replace(/[^0-9]/, '');
+					$.ajax({
+	
+	type:'GET',
+    url: '/forecast/'+date,
+	 statusCode: {
+        404: function() {
+            alert("I could not find the information you requested.");
+        }
+    },
+	success: function(json_data) {
+       console.log(json_data)
+	   a = []; 
+	   b= [];
+	   c = [];
+	   console.log(json_data.length);
+	   for(var i=0; i <json_data.length; i++){
+			a[i] = json_data[i].DATE;
+			b[i] = json_data[i].TMIN;
+			c[i] = json_data[i].TMAX;
+	   }
+	   if(a[0] == "20180601"){
+		console.log("Matched");
+		alert("Enter proper date");
+		a=[];
+		b=[];
+		c=[];
+	   }
+	   
+	   document.getElementById("tab").innerHTML = "<table width:60% border :2 padding:20px> <tr><th>DATE</th><th>TMIN</th><th>TMIN</th></tr><tr><td>"+a[0]+"</td><td>"+b[0]+"</td><td>"+c[0]+"</td></tr><tr><td>"+a[1]+"</td><td>"+b[1]+"</td><td>"+c[1]+"</td></tr><tr><td>"+a[2]+"</td><td>"+b[2]+"</td><td>"+c[2]+"</td></tr><tr><td>"+a[3]+"</td><td>"+b[3]+"</td><td>"+c[3]+"</td></tr><tr><td>"+a[4]+"</td><td>"+b[4]+"</td><td>"+c[4]+"</td></tr><tr><td>"+a[5]+"</td><td>"+b[5]+"</td><td>"+c[5]+"</td></tr><tr><td>"+a[6]+"</td><td>"+b[6]+"</td><td>"+c[6]+"</td></tr></table>";
+
+    },
+	
+    })
+	});
+	
+	
+	});
+	
+</script>
+
+</head>
+<body bgcolor="cyan">
+<center>
+<FORM NAME="myform" ACTION="" METHOD="GET">
+	Enter DATE <BR>
+	<INPUT  id="date_id"  VALUE="" type="date" name="date1"><P>
+	<INPUT TYPE="button" NAME="button" id="but" Value="Show Weather" >
+	
+	
+</FORM>
+<div id="tab"></div>
+</center>
+</body>
+</html>
